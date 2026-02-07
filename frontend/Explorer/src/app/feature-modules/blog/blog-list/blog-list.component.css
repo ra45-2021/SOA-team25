@@ -1,0 +1,4 @@
+.page { max-width: 900px; margin: 24px auto; padding: 0 12px; }
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.blog-card { margin-bottom: 14px; }
+.md { white-space: pre-wrap; font-family: inherit; margin: 0; }

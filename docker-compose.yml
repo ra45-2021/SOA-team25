@@ -1,0 +1,47 @@
+services:
+  auth-mongo:
+    image: mongo:7
+    environment:
+      MONGO_INITDB_DATABASE: auth_db
+    ports:
+      - "27017:27017"
+    networks: [appnet]
+
+  blog-mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: blog_db
+      MYSQL_USER: blog
+      MYSQL_PASSWORD: blog_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    ports:
+      - "3307:3306"
+    networks: [appnet]
+
+  auth-service:
+    build: ./auth-service
+    environment:
+      PORT: "8080"
+      JWT_SECRET: "dev_secret_change_me"
+      MONGO_URI: "mongodb://auth-mongo:27017"
+      MONGO_DB: "auth_db"
+    depends_on:
+      - auth-mongo
+    ports:
+      - "8080:8080"
+    networks: [appnet]
+
+  blog-service:
+    build: ./blog-service
+    environment:
+      PORT: "8080"
+      JWT_SECRET: "dev_secret_change_me"
+      MYSQL_DSN: "blog:blog_pass@tcp(blog-mysql:3306)/blog_db?parseTime=true"
+    depends_on:
+      - blog-mysql
+    ports:
+      - "8082:8080"
+    networks: [appnet]
+
+networks:
+  appnet:

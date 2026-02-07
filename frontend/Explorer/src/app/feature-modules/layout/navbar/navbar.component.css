@@ -1,0 +1,39 @@
+div {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+#buttons {
+    width: auto;
+    margin-left: auto;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.logo {
+  margin: 0;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.nav-tab {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-tab:hover {
+  background: rgba(255,255,255,0.1);
+}
+.nav-tab.active {
+  border-bottom: 0px solid white;
+  font-weight: 700;
+}

@@ -1,0 +1,21 @@
+<div class="page">
+  <mat-card>
+    <mat-card-title>Create blog</mat-card-title>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Description (Markdown)</mat-label>
+        <textarea matInput rows="8" formControlName="descriptionMarkdown"></textarea>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="saving || !form.valid">
+        Create
+      </button>
+    </form>
+  </mat-card>
+</div>

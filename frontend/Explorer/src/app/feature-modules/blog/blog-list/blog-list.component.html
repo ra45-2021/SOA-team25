@@ -1,0 +1,24 @@
+<div class="page">
+  <div class="header">
+    <h2>Blogs</h2>
+<button mat-raised-button color="primary" [routerLink]="['/blogs/new']">
+  New blog
+</button>  </div>
+
+  <mat-card *ngIf="loading">Loading...</mat-card>
+
+  <mat-card *ngIf="!loading && blogs.length === 0">
+    No blogs yet.
+  </mat-card>
+
+  <mat-card class="blog-card" *ngFor="let b of blogs">
+    <mat-card-title>{{ b.title }}</mat-card-title>
+    <mat-card-subtitle>
+      {{ b.createdAt | date:'medium' }} • Author ID: {{ b.authorUserId }}
+    </mat-card-subtitle>
+
+    <mat-card-content>
+      <pre class="md">{{ b.descriptionMarkdown }}</pre>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,35 @@
+<mat-toolbar color="primary">
+  <div class="nav-left">
+
+
+    <a
+    *ngIf="(authService.user$ | async)?.username"
+    routerLink="/blogs"
+    routerLinkActive="active"
+    class="nav-tab"
+    >
+    BLOGS
+    </a>
+
+  </div>
+
+  <div id="buttons">
+    <button *ngIf="user && user.username === ''"
+      color="accent"
+      mat-raised-button
+      [routerLink]="['login']">
+      Login/Register
+    </button>
+
+    <button *ngIf="user && user.username !== ''"
+      color="accent"
+      mat-raised-button
+      (click)="onLogout()">
+      Logout
+    </button>
+
+    <button color="primary" mat-raised-button [routerLink]="['home']">
+      Home
+    </button>
+  </div>
+</mat-toolbar>
