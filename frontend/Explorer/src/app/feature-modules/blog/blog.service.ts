@@ -24,10 +24,11 @@ export class BlogService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Blog[]> {
-    return this.http.get<Blog[]>(environment.blogHost + 'blogs');
+  return this.http.get<Blog[]>(`${environment.apiHost}/blogs`);
   }
 
   create(req: CreateBlogRequest): Observable<Blog> {
-    return this.http.post<Blog>(environment.blogHost + 'blogs', req);
+    return this.http.post<Blog>(`${environment.apiHost}/blogs`, req);
   }
+
 }

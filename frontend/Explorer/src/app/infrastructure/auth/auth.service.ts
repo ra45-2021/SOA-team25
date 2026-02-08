@@ -21,9 +21,9 @@ export class AuthService {
     private router: Router) { }
 
   login(login: Login): Observable<AuthenticationResponse> {
-    return this.http
-      .post<AuthenticationResponse>(environment.apiHost + 'users/login', login)
-      .pipe(
+  return this.http
+    .post<AuthenticationResponse>(`${environment.apiHost}/auth/users/login`, login)
+    .pipe(
         tap((authenticationResponse) => {
           this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
           this.setUser();
@@ -33,14 +33,15 @@ export class AuthService {
 
   register(registration: Registration): Observable<AuthenticationResponse> {
     return this.http
-    .post<AuthenticationResponse>(environment.apiHost + 'users', registration)
-    .pipe(
-      tap((authenticationResponse) => {
-        this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
-        this.setUser();
-      })
-    );
+      .post<AuthenticationResponse>(`${environment.apiHost}/auth/users`, registration)
+      .pipe(
+        tap((authenticationResponse) => {
+          this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
+          this.setUser();
+        })
+      );
   }
+
 
   logout(): void {
     this.router.navigate(['/home']).then(_ => {
