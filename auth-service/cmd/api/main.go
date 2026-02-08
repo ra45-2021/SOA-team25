@@ -34,6 +34,7 @@ func main() {
 	r.POST("/users/login", authHandler.Login)
 
 	r.GET("/users/me", middleware.Auth(jwtSecret), authHandler.Me)
+	r.GET("/users/:id", authHandler.GetUserByID)
 
 	port := config.MustEnvDefault("PORT", "8080")
 	log.Fatal(r.Run(":" + port))

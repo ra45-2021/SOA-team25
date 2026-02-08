@@ -5,6 +5,7 @@ import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from "@angular/material/card";
 
 
 @NgModule({
@@ -16,8 +17,9 @@ import { MatSelectModule } from '@angular/material/select';
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    MatSelectModule
-  ],
+    MatSelectModule,
+    MatCardModule
+],
   exports: [
     LoginComponent
   ]

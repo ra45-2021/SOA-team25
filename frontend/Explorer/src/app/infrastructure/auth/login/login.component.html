@@ -1,3 +1,9 @@
+<div class="error-containerz">
+  <p class="error-msg" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </p>
+</div>
+
 <form [formGroup]="loginForm" (ngSubmit)="login()">
     <div>
         <mat-form-field>
@@ -9,7 +15,7 @@
             <input matInput formControlName="password" type="password"/>
         </mat-form-field>
     <button color="primary" type="submit" mat-raised-button>Login</button>
-    <p>Don't have an account yet?<a href="/register">Sign Up</a></p>
+    <p>Don't have an account yet? <a href="/register">Sign Up</a></p>
     </div>
 </form>
 

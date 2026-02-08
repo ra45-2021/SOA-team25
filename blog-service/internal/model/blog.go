@@ -15,4 +15,5 @@ type BlogDto struct {
 	CreatedAt           time.Time `json:"createdAt"`
 	Images              []string  `json:"images,omitempty"`
 	AuthorUserID        string    `json:"authorUserId"`
+	AuthorUsername 		string `json:"authorUsername,omitempty"`
 }

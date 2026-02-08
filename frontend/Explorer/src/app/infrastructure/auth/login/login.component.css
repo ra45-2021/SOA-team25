@@ -5,11 +5,33 @@ form {
 }
 
 div {
-    width: 400px;
+    width: 380px;
     display:flex;
+    margin-top: 30px;
     flex-direction: column;
 }
 
 p {
-    margin-top: 10px;
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+}
+
+a {
+    margin-top: 0;
+    color: #5a83a5;
+}
+
+.error-msg {
+  color: #d32f2f;
+  font-weight: 500;
+  margin-top: 10px !important;
+}
+
+.error-containerz {
+  width: 380px;         
+  margin: 0 auto;     
+
+  height: 20px;
+  padding-top: 10px;
 }

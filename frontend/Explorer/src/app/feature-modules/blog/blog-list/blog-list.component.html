@@ -1,38 +1,52 @@
 <div class="page">
-  <div class="header">
-    <h2>Blogs</h2>
-<button mat-raised-button color="primary" [routerLink]="['/blogs/new']">
-  New blog
-</button>  </div>
+  <div class="hero">
+    <div class="hero-inner">
+      <h1>Blogs</h1>
+      <p>
+        Welcome to our Blogs. Here you will find the latest news, articles and guides.
+      </p>
 
-  <mat-card *ngIf="loading">Loading...</mat-card>
-
-  <mat-card *ngIf="!loading && blogs.length === 0">
-    No blogs yet.
-  </mat-card>
-
-  <mat-card class="blog-card" *ngFor="let b of blogs">
-
-  <div class="blog-header">
-    <div class="title-block">
-      <mat-card-title class="blog-title">
-        {{ b.title }}
-      </mat-card-title>
-
-      <div class="blog-author">
-        @{{ b.authorUsername}}
+      <div class="hero-actions">
+        <button mat-raised-button color="primary" [routerLink]="['/blogs/new']">
+          New blog
+        </button>
       </div>
-    </div>
-
-    <div class="blog-date">
-      {{ b.createdAt | date:'medium' }}
     </div>
   </div>
 
-  <mat-card-content class="blog-content">
-    <markdown [data]="b.descriptionMarkdown || ''"></markdown>
-  </mat-card-content>
+  <div class="container">
+    <mat-card class="state-card" *ngIf="loading">Učitavanje blogova...</mat-card>
 
-</mat-card>
+    <mat-card class="state-card" *ngIf="!loading && blogs.length === 0">
+      No blogs yet.
+    </mat-card>
 
+    <div class="grid" *ngIf="!loading && blogs.length > 0">
+      <mat-card class="blog-card" *ngFor="let b of blogs">
+        <div class="cover">
+          <img
+            src="assets/placeholder.png"
+            alt="Blog image"
+          />
+        </div>
+
+        <div class="card-body">
+          <div class="top">
+            <div class="title-block">
+              <div class="title">{{ b.title }}</div>
+              <div class="author" *ngIf="b.authorUsername">@{{ b.authorUsername }}</div>
+            </div>
+
+            <div class="date">
+              {{ b.createdAt | date:'dd.MM.yyyy' }}
+            </div>
+          </div>
+
+          <div class="desc">
+            <markdown [data]="b.descriptionMarkdown || ''"></markdown>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
 </div>

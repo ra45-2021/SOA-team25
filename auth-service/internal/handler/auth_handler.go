@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	"net/http"
+	"strconv"
 	"time"
 
 	"auth-service/internal/model"
@@ -70,4 +71,29 @@ func (h *AuthHandler) Me(c *gin.Context) {
 		Username: c.MustGet("username").(string),
 		Role:     c.MustGet("role").(string),
 	})
+}
+
+func (h *AuthHandler) GetUserByID(c *gin.Context) {
+	idStr := c.Param("id")
+
+	id, err := strconv.ParseInt(idStr, 10, 64)
+	if err != nil {
+		c.JSON(400, gin.H{"error": "invalid id"})
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(c.Request.Context(), 5*time.Second)
+	defer cancel()
+
+	user, found, err := h.svc.GetByID(ctx, id)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "db error"})
+		return
+	}
+	if !found {
+		c.JSON(404, gin.H{"error": "user not found"})
+		return
+	}
+
+	c.JSON(200, user)
 }

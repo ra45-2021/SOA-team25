@@ -67,3 +67,17 @@ func (s *MongoUserStore) FindByUsername(ctx context.Context, username string) (m
 	}
 	return u, true, nil
 }
+
+func (s *MongoUserStore) FindByID(ctx context.Context, id int64) (model.UserDoc, bool, error) {
+	var u model.UserDoc
+	err := s.users.FindOne(ctx, bson.M{"id": id}).Decode(&u)
+
+	if err == mongo.ErrNoDocuments {
+		return model.UserDoc{}, false, nil
+	}
+	if err != nil {
+		return model.UserDoc{}, false, err
+	}
+
+	return u, true, nil
+}

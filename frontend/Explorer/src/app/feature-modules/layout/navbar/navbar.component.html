@@ -1,35 +1,48 @@
-<mat-toolbar color="primary">
-  <div class="nav-left">
+<mat-toolbar class="topbar" role="navigation">
+  <div class="wrap">
+    <div class="left">
 
+      <div class="links">
+        <a
+          class="nav-link"
+          routerLink="/home"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Home
+        </a>
 
-    <a
-    *ngIf="(authService.user$ | async)?.username"
-    routerLink="/blogs"
-    routerLinkActive="active"
-    class="nav-tab"
-    >
-    BLOGS
-    </a>
+        <a
+          class="nav-link"
+          *ngIf="(authService.user$ | async)?.username"
+          routerLink="/blogs"
+          routerLinkActive="active"
+        >
+          Blogs
+        </a>
+      </div>
+    </div>
 
-  </div>
+    <div class="right">
+      <ng-container *ngIf="(authService.user$ | async) as u">
+        <button
+          *ngIf="!u.username"
+          mat-stroked-button
+          class="btn danger"
+          [routerLink]="['/login']"
+        >
+          Login / Register
+        </button>
 
-  <div id="buttons">
-    <button *ngIf="user && user.username === ''"
-      color="accent"
-      mat-raised-button
-      [routerLink]="['login']">
-      Login/Register
-    </button>
-
-    <button *ngIf="user && user.username !== ''"
-      color="accent"
-      mat-raised-button
-      (click)="onLogout()">
-      Logout
-    </button>
-
-    <button color="primary" mat-raised-button [routerLink]="['home']">
-      Home
-    </button>
+        <button
+          *ngIf="u.username"
+          mat-stroked-button
+          class="btn danger"
+          (click)="onLogout()"
+        >
+          Logout
+        </button>
+      </ng-container>
+    </div>
   </div>
 </mat-toolbar>

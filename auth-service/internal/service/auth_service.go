@@ -79,12 +79,16 @@ func (s *AuthService) Login(ctx context.Context, req model.LoginReq) (model.Auth
 	return model.AuthResponse{ID: u.ID, AccessToken: token}, nil
 }
 
+func (s *AuthService) GetByID(ctx context.Context, id int64) (model.UserDoc, bool, error) {
+	return s.users.FindByID(ctx, id)
+}
+
 func (s *AuthService) issueToken(u model.UserDoc) (string, error) {
 	claims := jwt.MapClaims{
-		"id":              u.ID,
-		"username":        u.Username,
+		"id":               u.ID,
+		"username":         u.Username,
 		model.RoleClaimKey: u.Role,
-		"exp":             time.Now().Add(24 * time.Hour).Unix(),
+		"exp":              time.Now().Add(24 * time.Hour).Unix(),
 	}
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return t.SignedString(s.secret)

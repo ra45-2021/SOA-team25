@@ -9,3 +9,21 @@ div {
     display:flex;
     flex-direction: column;
 }
+
+p{
+    text-align: center;
+}
+
+.error-msg {
+  color: #d32f2f;
+  font-weight: 500;
+  margin-top: 10px !important;
+}
+
+.error-containerz {
+  width: 380px;         
+  margin: 0 auto;     
+
+  height: 20px;
+  padding-top: 10px;
+}

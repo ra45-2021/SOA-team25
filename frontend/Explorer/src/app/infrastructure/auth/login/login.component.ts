@@ -11,6 +11,9 @@ import { Login } from '../model/login.model';
 })
 export class LoginComponent {
 
+  errorMessage = '';
+  private errorTimeout: any;
+
   constructor(
     private authService: AuthService,
     private router: Router
@@ -22,17 +25,32 @@ export class LoginComponent {
   });
 
   login(): void {
-    const login: Login = {
-      username: this.loginForm.value.username || "",
-      password: this.loginForm.value.password || "",
-    };
+  this.errorMessage = '';
 
-    if (this.loginForm.valid) {
-      this.authService.login(login).subscribe({
-        next: () => {
-          this.router.navigate(['/']);
-        },
-      });
-    }
+  const login: Login = {
+    username: this.loginForm.value.username || "",
+    password: this.loginForm.value.password || "",
+  };
+
+  if (this.loginForm.valid) {
+    this.authService.login(login).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        this.errorMessage =
+          err?.error?.message ||
+          err?.error?.error ||
+          'Login failed. Please try again.';
+
+        if (this.errorTimeout) clearTimeout(this.errorTimeout);
+
+        this.errorTimeout = setTimeout(() => {
+          this.errorMessage = '';
+        }, 2000);
+      }
+    });
   }
+}
+
 }

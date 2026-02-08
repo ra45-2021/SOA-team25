@@ -26,7 +26,9 @@ func main() {
 	db.MustInitSchema(sqlDB)
 
 	blogStore := store.NewMySQLBlogStore(sqlDB)
-	blogService := service.NewBlogService(blogStore)
+	authBase := config.MustEnv("AUTH_BASE_URL")
+	authClient := service.NewAuthClient(authBase)
+	blogService := service.NewBlogService(blogStore, authClient)
 	blogHandler := handler.NewBlogHandler(blogService)
 
 	r.GET("/health", func(c *gin.Context) { c.String(200, "ok") })

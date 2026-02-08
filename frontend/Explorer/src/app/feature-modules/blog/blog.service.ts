@@ -9,7 +9,7 @@ export interface Blog {
   descriptionMarkdown: string;
   createdAt: string;
   images?: string[];
-  authorUserId: number;
+  authorUserId: string;
   authorUsername?: string;
 }
 

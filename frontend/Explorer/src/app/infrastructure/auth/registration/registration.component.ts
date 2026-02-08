@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 })
 export class RegistrationComponent {
 
+  errorMessage = '';
+  private errorTimeout: any;
+
   constructor(
     private authService: AuthService,
     private router: Router
@@ -36,6 +39,18 @@ export class RegistrationComponent {
         next: () => {
           this.router.navigate(['home']);
         },
+        error: (err) => {
+        this.errorMessage =
+          err?.error?.message ||
+          err?.error?.error ||
+          'Registration failed. Please try again.';
+
+        if (this.errorTimeout) clearTimeout(this.errorTimeout);
+
+        this.errorTimeout = setTimeout(() => {
+          this.errorMessage = '';
+        }, 2000);
+      }
       });
     }
   }
