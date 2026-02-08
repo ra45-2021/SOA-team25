@@ -1,11 +1,19 @@
 FROM golang:1.22 AS build
+
 WORKDIR /app
-COPY . .
+
+COPY go.mod go.sum ./
 RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux go build -o service main.go
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o service ./cmd/api
+
 
 FROM gcr.io/distroless/base-debian12
-WORKDIR /
+
+WORKDIR /app
+COPY --from=build /app/service .
+
 EXPOSE 8080
-COPY --from=build /app/service /service
-ENTRYPOINT ["/service"]
+CMD ["./service"]

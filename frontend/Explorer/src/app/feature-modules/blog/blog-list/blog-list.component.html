@@ -12,13 +12,27 @@
   </mat-card>
 
   <mat-card class="blog-card" *ngFor="let b of blogs">
-    <mat-card-title>{{ b.title }}</mat-card-title>
-    <mat-card-subtitle>
-      {{ b.createdAt | date:'medium' }} • Author ID: {{ b.authorUserId }}
-    </mat-card-subtitle>
 
-    <mat-card-content>
-      <pre class="md">{{ b.descriptionMarkdown }}</pre>
-    </mat-card-content>
-  </mat-card>
+  <div class="blog-header">
+    <div class="title-block">
+      <mat-card-title class="blog-title">
+        {{ b.title }}
+      </mat-card-title>
+
+      <div class="blog-author">
+        @{{ b.authorUsername}}
+      </div>
+    </div>
+
+    <div class="blog-date">
+      {{ b.createdAt | date:'medium' }}
+    </div>
+  </div>
+
+  <mat-card-content class="blog-content">
+    <markdown [data]="b.descriptionMarkdown || ''"></markdown>
+  </mat-card-content>
+
+</mat-card>
+
 </div>

@@ -6,10 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 import { BlogListComponent } from './blog-list/blog-list.component';
 import { BlogCreateComponent } from './blog-create/blog-create.component';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [BlogListComponent, BlogCreateComponent],
@@ -20,7 +22,8 @@ import { BlogCreateComponent } from './blog-create/blog-create.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    RouterModule
+    RouterModule,
+    MarkdownModule.forRoot({ loader: HttpClient })
   ],
 })
 export class BlogModule {}

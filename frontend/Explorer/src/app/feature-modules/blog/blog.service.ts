@@ -10,6 +10,7 @@ export interface Blog {
   createdAt: string;
   images?: string[];
   authorUserId: number;
+  authorUsername?: string;
 }
 
 export interface CreateBlogRequest {
