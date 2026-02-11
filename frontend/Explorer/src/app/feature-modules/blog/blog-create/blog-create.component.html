@@ -1,21 +1,66 @@
 <div class="page">
   <mat-card>
-    <mat-card-title>Create blog</mat-card-title>
+    <mat-card-title>Create Blog</mat-card-title>
 
     <form [formGroup]="form" (ngSubmit)="submit()">
       <mat-form-field appearance="fill">
         <mat-label>Title</mat-label>
-        <input matInput formControlName="title" />
+        <input matInput formControlName="title" placeholder="Enter blog title" />
+        <mat-error *ngIf="form.get('title')?.invalid">Title is required</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Description (Markdown)</mat-label>
-        <textarea matInput rows="8" formControlName="descriptionMarkdown"></textarea>
+        <textarea matInput rows="10" formControlName="descriptionMarkdown" placeholder="Write your content..."></textarea>
+        <mat-error *ngIf="form.get('descriptionMarkdown')?.invalid">Content is required</mat-error>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="saving || !form.valid">
-        Create
+      <div class="preview-section" *ngIf="form.get('descriptionMarkdown')?.value">
+        <label class="section-label">Live Preview</label>
+        <div class="preview-box">
+          <markdown [data]="form.get('descriptionMarkdown')?.value"></markdown>
+        </div>
+      </div>
+
+      <div class="upload-container">
+        <label class="section-label">Images (optional)</label>
+        
+        <div class="upload-controls">
+          <input
+            type="file"
+            #fileInput
+            accept="image/*"
+            multiple
+            (change)="onFilesSelected($event)"
+            hidden
+          />
+          <button type="button" mat-stroked-button (click)="fileInput.click()" class="upload-btn">
+            <mat-icon>cloud_upload</mat-icon> Choose Files
+          </button>
+          <span class="file-count" *ngIf="selectedFiles.length">
+            {{ selectedFiles.length }} file(s) selected
+          </span>
+        </div>
+
+        <div class="previews-grid" *ngIf="previews.length">
+          <div class="preview-item" *ngFor="let src of previews; let i = index">
+            <img [src]="src" class="preview-img" />
+            <button type="button" class="remove-btn" (click)="removeImage(i)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="saving || !form.valid" class="submit-btn">
+        <span *ngIf="!saving">Publish Blog</span>
+        <span *ngIf="saving">Uploading...</span>
       </button>
+
+      <div class="err-container" *ngIf="errorMsg">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ errorMsg }}</span>
+      </div>
     </form>
   </mat-card>
 </div>

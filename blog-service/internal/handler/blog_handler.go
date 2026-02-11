@@ -74,3 +74,31 @@ func (h *BlogHandler) Create(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, out)
 }
+
+func (h *BlogHandler) UploadImages(c *gin.Context) {
+	_, ok := c.Get("userId")
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "missing user id"})
+		return
+	}
+
+	form, err := c.MultipartForm()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid multipart form"})
+		return
+	}
+
+	files := form.File["files"]
+	if len(files) == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "no files provided"})
+		return
+	}
+
+	urls, err := h.svc.UploadImages(c.Request.Context(), files)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "upload failed"})
+		return
+	}
+
+	c.JSON(http.StatusOK, urls)
+}

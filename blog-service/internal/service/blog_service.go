@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"mime/multipart"
 	"strconv"
 
 	"blog-service/internal/model"
@@ -9,12 +10,17 @@ import (
 )
 
 type BlogService struct {
-	store store.BlogStore
-	auth  *AuthClient
+	store    store.BlogStore
+	auth     *AuthClient
+	uploader ImageUploader
 }
 
-func NewBlogService(store store.BlogStore, auth *AuthClient) *BlogService {
-	return &BlogService{store: store, auth: auth}
+type ImageUploader interface {
+	UploadMany(ctx context.Context, files []*multipart.FileHeader) ([]string, error)
+}
+
+func NewBlogService(store store.BlogStore, auth *AuthClient, uploader ImageUploader) *BlogService {
+	return &BlogService{store: store, auth: auth, uploader: uploader}
 }
 
 func (s *BlogService) GetAll(ctx context.Context) ([]model.BlogDto, error) {
@@ -77,3 +83,9 @@ func (s *BlogService) Create(ctx context.Context, req model.CreateBlogReq, autho
 	return out, nil
 }
 
+func (s *BlogService) UploadImages(ctx context.Context, files []*multipart.FileHeader) ([]string, error) {
+	if s.uploader == nil {
+		return []string{}, nil
+	}
+	return s.uploader.UploadMany(ctx, files)
+}

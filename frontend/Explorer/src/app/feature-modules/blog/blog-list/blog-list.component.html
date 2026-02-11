@@ -22,10 +22,15 @@
     </mat-card>
 
     <div class="grid" *ngIf="!loading && blogs.length > 0">
-      <mat-card class="blog-card" *ngFor="let b of blogs">
+      <mat-card 
+        class="blog-card" 
+        *ngFor="let b of blogs" 
+        [routerLink]="['/blogs', b.id]"
+        style="cursor: pointer;"
+      >
         <div class="cover">
           <img
-            src="assets/placeholder.png"
+            [src]="(b.images && b.images.length > 0) ? b.images[0] : 'https://theroostingplace.blog/wp-content/uploads/2020/12/qi-bin-w4hbafegiac-unsplash.jpg'"
             alt="Blog image"
           />
         </div>

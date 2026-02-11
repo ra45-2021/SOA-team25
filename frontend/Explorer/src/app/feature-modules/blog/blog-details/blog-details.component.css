@@ -1,0 +1,147 @@
+.page {
+  min-height: 100vh;
+  background: #0b0f19;
+  color: #e5e7eb;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.details-card {
+  width: min(850px, 95%);
+  padding: 0 !important;
+  border-radius: 20px !important;
+  background: rgba(17, 24, 39, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.header-image-container {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  background: #111827;
+}
+
+.header-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(transparent, rgba(11, 15, 25, 1));
+}
+
+.content-padding {
+  padding: 0 40px 40px;
+}
+
+.blog-title {
+  font-size: 48px;
+  font-weight: 800;
+  margin-top: -30px;
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+}
+
+.meta-info {
+  display: flex;
+  gap: 24px;
+  margin: 24px 0;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.author-tag, .date-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.author-tag b {
+  color: #f3f4f6;
+}
+
+.divider {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  margin: 32px 0;
+}
+
+.markdown-body {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #d1d5db;
+}
+
+.gallery-section {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gallery-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.gallery-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.gallery-img:hover {
+  transform: scale(1.02);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.actions {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.back-btn {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  padding: 8px 24px !important;
+  border-radius: 10px !important;
+}
+
+.page-state {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #e5e7eb;
+  gap: 20px;
+}
+
+.err-text {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}

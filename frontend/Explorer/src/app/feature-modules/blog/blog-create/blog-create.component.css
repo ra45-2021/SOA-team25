@@ -9,23 +9,25 @@
 
 mat-card {
   width: min(720px, 92%);
-  padding: 22px 22px 18px !important;
-  border-radius: 14px !important;
-  background: rgba(17,24,39,0.85) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.30);
+  padding: 24px !important;
+  border-radius: 16px !important;
+  background: rgba(17, 24, 39, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
 }
 
 mat-card-title {
-  font-size: 22px !important;
+  font-size: 24px !important;
   font-weight: 800 !important;
-  margin-bottom: 14px !important;
-  color: #f3f4f6 !important;
+  margin-bottom: 20px !important;
+  color: #ffffff !important;
+  letter-spacing: -0.025em;
 }
 
 form {
-  display: grid;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 :host ::ng-deep .mat-mdc-form-field {
@@ -33,41 +35,126 @@ form {
 }
 
 :host ::ng-deep .mat-mdc-text-field-wrapper {
-  background: rgba(15,23,42,0.9) !important;
-  border: 1px solid rgba(255,255,255,0.10) !important;
+  background: rgba(15, 23, 42, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 12px !important;
 }
 
-:host ::ng-deep .mat-mdc-form-field-focus-overlay {
-  background: transparent !important;
+:host ::ng-deep .mat-mdc-input-element {
+  color: #f3f4f6 !important;
 }
 
-:host ::ng-deep .mdc-floating-label {
-  color: rgba(229,231,235,0.75) !important;
+.section-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(156, 163, 175, 0.8);
+  margin-bottom: 8px;
+  display: block;
+  letter-spacing: 0.05em;
 }
 
-:host ::ng-deep .mat-mdc-input-element,
-:host ::ng-deep textarea.mat-mdc-input-element {
-  color: #e5e7eb !important;
+.preview-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+  color: #e5e7eb;
 }
 
-:host ::ng-deep .mat-mdc-form-field-hint,
-:host ::ng-deep .mat-mdc-form-field-error {
-  color: rgba(229,231,235,0.70) !important;
+.upload-container {
+  background: rgba(15, 23, 42, 0.6);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-button[mat-raised-button] {
+.upload-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.upload-btn {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.file-count {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.previews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+}
+
+.preview-item {
+  position: relative;
+  aspect-ratio: 1;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.remove-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.remove-btn mat-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+.submit-btn {
   background: #ffffff !important;
   color: #111827 !important;
-  border: 1px solid rgba(0,0,0,0.15) !important;
-  border-radius: 10px !important;
-  padding: 8px 14px !important;
+  height: 48px;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  margin-top: 8px;
 }
 
-button[mat-raised-button]:hover {
+.submit-btn:hover:not([disabled]) {
   background: #f3f4f6 !important;
 }
 
-button[mat-raised-button][disabled] {
-  opacity: 0.55;
+.submit-btn[disabled] {
+  opacity: 0.6;
+}
+
+.err-container {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  color: #fca5a5;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
 }
