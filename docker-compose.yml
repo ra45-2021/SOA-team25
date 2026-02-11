@@ -6,11 +6,6 @@ services:
     ports:
       - "27017:27017"
     networks: [appnet]
-    healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "mongodb://localhost:27017/admin", "--eval", "db.runCommand({ ping: 1 }).ok"]
-      interval: 5s
-      timeout: 3s
-      retries: 30
 
   blog-mysql:
     image: mysql:8.4
@@ -22,11 +17,6 @@ services:
     ports:
       - "3307:3306"
     networks: [appnet]
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -proot_pass --silent"]
-      interval: 5s
-      timeout: 3s
-      retries: 30
 
   minio:
     image: minio/minio:latest
@@ -40,24 +30,6 @@ services:
     networks: [appnet]
     volumes:
       - minio_data:/data
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/ready"]
-      interval: 5s
-      timeout: 3s
-      retries: 30
-
-  # 1x init kontejner koji pravi bucket i podešava public read (ako ti treba)
-  minio-init:
-    image: minio/mc:latest
-    depends_on:
-      minio:
-        condition: service_healthy
-    networks: [appnet]
-    entrypoint: ["/bin/sh", "-c"]
-    command: >
-      mc alias set local http://minio:9000 minioadmin minioadmin &&
-      mc mb -p local/blog-images || true &&
-      mc anonymous set download local/blog-images || true
 
   auth-service:
     build: ./auth-service
@@ -67,8 +39,7 @@ services:
       MONGO_URI: "mongodb://auth-mongo:27017"
       MONGO_DB: "auth_db"
     depends_on:
-      auth-mongo:
-        condition: service_healthy
+      - auth-mongo
     ports:
       - "8081:8080"
     networks: [appnet]
@@ -79,66 +50,26 @@ services:
       PORT: "8080"
       JWT_SECRET: "dev_secret_change_me"
       MYSQL_DSN: "blog:blog_pass@tcp(blog-mysql:3306)/blog_db?parseTime=true"
+
       AUTH_BASE_URL: "http://auth-service:8080"
+
       S3_ENDPOINT: "http://minio:9000"
       S3_ACCESS_KEY: "minioadmin"
       S3_SECRET_KEY: "minioadmin"
       S3_BUCKET: "blog-images"
       S3_PUBLIC_BASE_URL: "http://localhost:9000/blog-images"
     depends_on:
-      blog-mysql:
-        condition: service_healthy
-      minio:
-        condition: service_healthy
-      minio-init:
-        condition: service_started
-      auth-service:
-        condition: service_started
+      - blog-mysql
+      - minio
     ports:
       - "8082:8080"
     networks: [appnet]
 
-    tours-mysql:
-    image: mysql:8.4
-    environment:
-      MYSQL_DATABASE: tours_db
-      MYSQL_USER: tours
-      MYSQL_PASSWORD: tours_pass
-      MYSQL_ROOT_PASSWORD: root_pass
-    ports:
-      - "3308:3306"
-    networks: [appnet]
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -proot_pass --silent"]
-      interval: 5s
-      timeout: 3s
-      retries: 30
-
-  tours-service:
-    build: ./tours-service
-    environment:
-      ASPNETCORE_URLS: "http://+:8080"
-      ConnectionStrings__ToursDb: "Server=tours-mysql;Port=3306;Database=tours_db;User=tours;Password=tours_pass;"
-      JWT_SECRET: "dev_secret_change_me"
-    depends_on:
-      tours-mysql:
-        condition: service_healthy
-      auth-service:
-        condition: service_started
-    ports:
-      - "8083:8080"
-    networks: [appnet]
-
-
   api-gateway:
     build: ./api-gateway
     depends_on:
-      auth-service:
-        condition: service_started
-      blog-service:
-        condition: service_started
-      tours-service:
-        condition: service_started
+      - auth-service
+      - blog-service
     ports:
       - "8080:8080"
     networks: [appnet]
