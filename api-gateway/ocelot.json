@@ -45,6 +45,7 @@
         { "Host": "tour-service", "Port": 8080 }
       ]
     }
+     
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:8080"
