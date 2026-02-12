@@ -91,3 +91,13 @@ func parseFloat(s string) float64 {
 	f, _ := strconv.ParseFloat(s, 64)
 	return f
 }
+
+func (h *TourHandler) GetAllTours(c *gin.Context) {
+    tours, err := h.svc.GetAll()
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to fetch tours"})
+        return
+    }
+    
+    c.JSON(http.StatusOK, tours)
+}

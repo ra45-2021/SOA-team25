@@ -25,3 +25,11 @@ func (s *TourStore) GetToursByAuthor(authorID int64) ([]model.Tour, error) {
 func (s *TourStore) CreateCheckpoint(cp *model.Checkpoint) error {
 	return s.db.Create(cp).Error
 }
+
+func (s *TourStore) GetAll() ([]model.Tour, error) {
+    var tours []model.Tour
+    
+    result := s.db.Where("status <> ?", 2).Find(&tours)
+    
+    return tours, result.Error
+}

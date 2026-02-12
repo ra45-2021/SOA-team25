@@ -53,6 +53,7 @@ func main() {
 	
 	tours := r.Group("/tours")
 	{
+		tours.GET("", tourHandler.GetAllTours)
 		tours.POST("", tourHandler.CreateTour)
 		tours.GET("/my", tourHandler.GetMyTours)
 		tours.POST("/:id/checkpoints", tourHandler.AddCheckpoint)

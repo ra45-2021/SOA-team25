@@ -22,7 +22,7 @@ func (s *TourService) CreateTour(ctx context.Context, tour *model.Tour) error {
 	if err != nil || !isGuide {
 		return errors.New("user is not a guide or not found")
 	}
-	tour.Status = "DRAFT"
+	tour.Status = 0
 	tour.Price = 0
 	return s.store.CreateTour(tour)
 }
@@ -33,4 +33,8 @@ func (s *TourService) GetAuthorTours(authorID int64) ([]model.Tour, error) {
 
 func (s *TourService) AddCheckpoint(cp *model.Checkpoint) error {
 	return s.store.CreateCheckpoint(cp)
+}
+
+func (s *TourService) GetAll() ([]model.Tour, error) {
+    return s.store.GetAll()
 }

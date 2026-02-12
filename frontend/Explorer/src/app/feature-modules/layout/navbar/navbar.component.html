@@ -20,6 +20,15 @@
         >
           Blogs
         </a>
+
+        <a
+          class="nav-link"
+          *ngIf="(authService.user$ | async)?.username"
+          routerLink="/tour-list"
+          routerLinkActive="active"
+        >
+          Tours
+        </a>
       </div>
     </div>
 

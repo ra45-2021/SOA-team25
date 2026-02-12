@@ -1,0 +1,206 @@
+.right-panel * {
+  box-sizing: border-box;
+}
+
+.checkpoint-card {
+  padding: 15px;
+  border-radius: 20px;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.05);
+  overflow: hidden; 
+}
+
+.input-wrapper {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.custom-input {
+  width: 100% !important; 
+  max-width: 100%;        
+  box-sizing: border-box !important;
+  padding: 12px;
+  border: 1px solid rgba(17, 24, 39, 0.15);
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  background: #fcfcfc;
+  display: block; 
+}
+
+textarea.custom-input {
+  resize: vertical;
+  min-width: 100%;
+  max-width: 100%;
+}
+
+.btn-primary, .btn-finalize.danger {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.editor-wrap {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 30px;
+  width: min(1300px, 94%);
+  margin: 10px auto;
+}
+
+.map-box {
+  height: 600px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.info-strip {
+  margin-top: 20px;
+  background: #f0f4f8;
+  padding: 18px;
+  border-radius: 12px;
+  text-align: center;
+  color: #3b5f7a;
+  font-size: 16px;
+  border-left: 5px solid #5a83a5;
+}
+
+.checkpoint-card {
+  padding: 15px;
+  border-radius: 20px;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-sizing: border-box;
+}
+
+.card-title {
+  color: #111827;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.cp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.input-wrapper  {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 6px;
+  box-sizing: border-box;
+
+}
+
+.custom-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(17, 24, 39, 0.15);
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  background: #fcfcfc;
+  transition: border 0.2s;
+}
+
+.custom-input:focus {
+  border-color: #5a83a5;
+  background: white;
+}
+
+.coords-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-family: monospace;
+  color: #9ca3af;
+  background: #f9fafb;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.checkpoint-list {
+  margin-top: 20px;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 20px;
+}
+
+.checkpoint-list h4 {
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 12px;
+}
+
+.point-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.point-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.index-circle {
+  background: #5a83a5;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.btn-finalize.danger {
+  width: 100%;
+  margin-top: 25px;
+  background-color: #3b5f7a !important;
+  color: white !important;
+  height: 48px;
+  font-weight: 600;
+  border-radius: 10px !important;
+}
+
+.btn-primary {
+  background-color: #5a83a5 !important;
+  color: white !important;
+  height: 44px;
+  border-radius: 10px !important;
+}
+
+.empty-state {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 13px;
+  padding: 20px;
+  font-style: italic;
+}
+.upload-section { border: 2px dashed #ddd; padding: 1rem; text-align: center; border-radius: 8px; }
+.previews-container { display: flex; gap: 10px; justify-content: center; margin-top: 1rem; }
+.preview-card { position: relative; width: 80px; height: 80px; }
+.preview-card img { width: 100%; height: 100%; border-radius: 4px; }
+.btn-remove { position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; border: none; width: 20px; height: 20px; cursor: pointer; }

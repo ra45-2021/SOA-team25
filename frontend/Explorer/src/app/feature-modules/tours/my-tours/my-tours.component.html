@@ -1,0 +1,27 @@
+<div class="container-wrap">
+  <div class="page-header">
+    <h1>My Purchased Tours</h1>
+    <p>Your collection of adventures and tickets</p>
+  </div>
+
+  <div class="tours-list">
+    <div class="purchase-item" *ngFor="let item of purchasedTours">
+      <div class="sidebar-status">
+        <span class="status-badge">OWNED</span>
+        <div class="price-val">${{ item.tour.price }}</div>
+      </div>
+      
+      <div class="main-info">
+        <h3>{{ item.tour.name }}</h3>
+        <p>{{ item.tour.description }}</p>
+        
+        <div class="actions">
+          <button mat-raised-button class="btn-start">Start Tour</button>
+          <button mat-stroked-button color="primary" *ngIf="!item.token.is_reviewed" (click)="leaveReview(item)">
+            Leave Review
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

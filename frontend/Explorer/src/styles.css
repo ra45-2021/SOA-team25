@@ -1,4 +1,7 @@
 @import 'prismjs/themes/prism.css';
+@import "leaflet/dist/leaflet.css";
+@import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -86,4 +89,10 @@ mat-card {
   color: rgba(229,231,235,0.92) !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
   border-radius: 14px !important;
+}
+
+.leaflet-container {
+    height: 100%;
+    width: 100%;
+    z-index: 1;
 }

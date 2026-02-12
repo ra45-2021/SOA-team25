@@ -1,0 +1,54 @@
+<div class="page">
+  <div class="list-header" *ngIf="userRole === 'GUIDE'">
+  <button class="btn-primary-style" routerLink="/create-tour">
+    + Create New Tour
+  </button>
+</div>
+
+  <div class="tour-grid" *ngIf="publishedTours.length > 0">
+    <mat-card class="details-card" *ngFor="let tour of publishedTours">
+      
+      <div class="header-image-container">
+        <img
+          [src]="'https://res.cloudinary.com/colbycloud-next-cloudinary/image/upload/c_fill,w_3840,h_2880,g_auto/f_auto/q_auto/v1/images/mountain?_a=BAVMn6DW0'"
+          alt="Tour header"
+          class="header-img"
+        />
+        <div class="header-overlay"></div>
+      </div>
+
+      <div class="content-padding">
+        <h1 class="blog-title">{{ tour.name }}</h1>
+        
+        <div class="meta-info">
+          <div class="author-tag">
+            <span class="difficulty-tag" [ngClass]="'difficulty-' + tour.difficulty">
+              {{ tour.difficulty === 0 ? 'Easy' : tour.difficulty === 1 ? 'Medium' : 'Hard' }}
+            </span>
+          </div>
+          <div class="price-container">
+            <mat-icon>monetization_on</mat-icon>
+            <span class="date-tag"><b>{{ tour.price }}</b></span>
+          </div>
+        </div>
+
+        <div class="tags-container" *ngIf="tour.tags">
+          <span class="tag-badge" *ngFor="let tag of tour.tags.split(';')">
+            #{{ tag.trim() }}
+          </span>
+        </div>
+
+        <mat-divider class="divider"></mat-divider>
+
+        <div class="markdown-body">
+          <p>{{ tour.description }}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="page-state" *ngIf="publishedTours.length === 0">
+    <mat-icon style="font-size: 48px; width: 48px; height: 48px; color: #9ca3af;">map</mat-icon>
+    <p>No adventures found yet...</p>
+  </div>
+</div>

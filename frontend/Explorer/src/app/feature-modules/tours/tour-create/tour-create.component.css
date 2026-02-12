@@ -1,0 +1,91 @@
+.custom-input, 
+.custom-select, 
+textarea.custom-input {
+  width: 100%;
+  box-sizing: border-box; 
+  padding: 12px;
+  border: 1px solid rgba(17, 24, 39, 0.15);
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  display: block; 
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn-full.danger {
+  width: 100%;
+  margin-top: 10px;
+  background-color: #3b5f7a !important;
+  color: white !important;
+  height: 50px;
+  border-radius: 10px !important;
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+.form-container {
+  width: min(600px, 94%);
+  margin: 60px auto;
+}
+
+.tour-card-form {
+  padding: 40px;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.title {
+  color: #4b6db6;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+.standard-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #4b5563;
+}
+
+.custom-input, .custom-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(17, 24, 39, 0.15);
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+.custom-input:focus {
+  border-color: #5a83a5;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.btn-full.danger {
+  margin-top: 10px;
+  background-color: #4b6db6 !important;
+  color: white !important;
+  height: 50px;
+  border-radius: 10px !important;
+  font-weight: 600;
+}

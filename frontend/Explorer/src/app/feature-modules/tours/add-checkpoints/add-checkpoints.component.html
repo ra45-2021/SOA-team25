@@ -1,0 +1,76 @@
+<div class="editor-wrap">
+  <div class="left-panel">
+    <div class="map-box">
+      <xp-map #map 
+      [addedCheckpointCollection]="checkpoints" 
+      (locationSelected)="onLocationSelected($any($event))"
+      (checkpointRemoved)="deleteCheckpoint($any($event))"
+      (routeDistanceKm)="onRouteDistanceUpdated($any($event))">
+    </xp-map>
+    </div>
+    <div class="info-strip">
+      Total Route Distance: <strong>{{ tourDistanceKm | number:'1.2-2' }} km</strong>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <mat-card class="checkpoint-card">
+      <h3 class="card-title">Checkpoint Details</h3>
+      
+      <form [formGroup]="checkpointForm" class="cp-form">
+        <div class="input-wrapper">
+          <label>Checkpoint Name</label>
+          <input formControlName="name" placeholder="Ex. Old Bridge" class="custom-input">
+        </div>
+
+        <div class="input-wrapper">
+          <label>Description</label>
+          <textarea formControlName="description" placeholder="What should travelers see here?" rows="3" class="custom-input"></textarea>
+        </div>
+        
+        <div class="coords-display">
+          <span><i class="lat-icon"></i> Lat: {{ checkpointForm.value.latitude | number:'1.4-4' }}</span>
+          <span><i class="lng-icon"></i> Lng: {{ checkpointForm.value.longitude | number:'1.4-4' }}</span>
+        </div>
+
+        <button mat-raised-button class="btn-primary" (click)="addCheckpoint()" [disabled]="!checkpointForm.valid">
+          Save Position
+        </button>
+      </form>
+
+      <div class="upload-section">
+        <label>Checkpoint Image (Required)</label>
+        <div class="upload-controls">
+          <input type="file" #fileInput accept="image/*" (change)="onFilesSelected($event)" hidden />
+          <button type="button" class="btn-upload" (click)="fileInput.click()">Choose File</button>
+          <span class="file-info" *ngIf="selectedFiles.length">{{ selectedFiles.length }} file selected</span>
+        </div>
+
+        <div class="previews-container" *ngIf="previews.length">
+          <div class="preview-card" *ngFor="let src of previews; let i = index">
+            <img [src]="src" />
+            <button type="button" class="btn-remove" (click)="removeImage(i)">×</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkpoint-list">
+        <h4>Saved Points ({{checkpoints.length}})</h4>
+        <div *ngIf="checkpoints.length === 0" class="empty-state">
+          Click on the map to add points
+        </div>
+        <div *ngFor="let cp of checkpoints; let i = index" class="point-row">
+          <div class="point-info">
+            <span class="index-circle">{{ i + 1 }}</span>
+            <span class="point-name">{{ cp.name }}</span>
+          </div>
+          <button (click)="deleteCheckpoint(i)" class="btn-icon">×</button>
+        </div>
+      </div>
+
+      <button mat-raised-button class="btn-finalize danger" (click)="finalizeTour()" [disabled]="checkpoints.length < 2">
+        Publish Tour
+      </button>
+    </mat-card>
+  </div>
+</div>

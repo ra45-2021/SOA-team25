@@ -10,6 +10,14 @@ const (
 	Hard
 )
 
+type TourStatus int
+
+const (
+    Draft TourStatus = iota
+    Published
+    Archived
+)
+
 type Tour struct {
 	ID          uint           `json:"id" gorm:"primaryKey"`
 	AuthorID    int64          `json:"author_id"`
@@ -17,7 +25,7 @@ type Tour struct {
 	Description string         `json:"description"`
 	Difficulty  TourDifficulty `json:"difficulty"`
 	Tags        string         `json:"tags"`
-	Status      string         `json:"status"` // "DRAFT"
+	Status      TourStatus         `json:"status"` 
 	Price       float64        `json:"price"`  // 0
 	CreatedAt   time.Time      `json:"created_at"`
 	Checkpoints []Checkpoint   `json:"checkpoints" gorm:"foreignKey:TourID"`

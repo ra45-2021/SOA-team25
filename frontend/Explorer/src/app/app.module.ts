@@ -7,12 +7,11 @@ import { LayoutModule } from './feature-modules/layout/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './infrastructure/material/material.module';
 import { BlogModule } from './feature-modules/blog/blog.module';
-import { MarketplaceModule } from './feature-modules/marketplace/marketplace.module';
-import { TourAuthoringModule } from './feature-modules/tour-authoring/tour-authoring.module';
-import { TourExecutionModule } from './feature-modules/tour-execution/tour-execution.module';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
+import { MapComponent } from 'src/app/shared/map/map.component';
+import { TourModule } from './feature-modules/tours/tour.module';
 
 @NgModule({
   declarations: [
@@ -25,10 +24,9 @@ import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
     BrowserAnimationsModule,
     MaterialModule,
     BlogModule,
-    MarketplaceModule,
-    TourAuthoringModule,
-    TourExecutionModule,
     AuthModule,
+    TourModule,
+    MapComponent,
     HttpClientModule
   ],
   providers: [

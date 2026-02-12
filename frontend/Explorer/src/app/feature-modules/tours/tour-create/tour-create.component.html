@@ -1,0 +1,45 @@
+<div class="form-container">
+  <mat-card class="tour-card-form">
+    <h2 class="title">Create New Adventure</h2>
+    
+    <form (ngSubmit)="createTour()" class="standard-form">
+      <div class="field-group">
+        <label>Tour Name</label>
+        <input type="text" [(ngModel)]="tour.name" name="name" required class="custom-input">
+      </div>
+
+      <div class="field-group">
+        <label>Description</label>
+        <textarea [(ngModel)]="tour.description" name="description" rows="4" class="custom-input"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>Tags (separate with semicolon ;)</label>
+        <input type="text" 
+              [(ngModel)]="tour.tags" 
+              name="tags" 
+              placeholder="nature;hiking;forest" 
+              class="custom-input">
+      </div>
+
+      <div class="row">
+        <div class="field-group">
+          <label>Difficulty</label>
+          <select [(ngModel)]="tour.difficulty" name="difficulty" class="custom-select">
+            <option [value]="0">Easy</option>
+            <option [value]="1">Medium</option>
+            <option [value]="2">Hard</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Price ($)</label>
+          <input type="number" [(ngModel)]="tour.price" name="price" class="custom-input">
+        </div>
+      </div>
+
+      <button mat-raised-button type="submit" class="btn-full danger">
+        Next: Set Checkpoints
+      </button>
+    </form>
+  </mat-card>
+</div>
