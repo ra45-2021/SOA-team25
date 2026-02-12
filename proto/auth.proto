@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package auth;
+option go_package = "./pb";
+
+service AuthService {
+  rpc GetUser(GetUserRequest) returns (UserResponse);
+  rpc CheckAuthor(CheckAuthorRequest) returns (CheckAuthorResponse);
+}
+
+message GetUserRequest { int64 id = 1; }
+message UserResponse {
+  int64 id = 1;
+  string username = 2;
+  string role = 3;
+}
+
+message CheckAuthorRequest { int64 id = 1; }
+message CheckAuthorResponse { bool exists = 1; string role = 2; }

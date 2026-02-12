@@ -1,0 +1,34 @@
+package model
+
+import "time"
+
+type TourDifficulty int
+
+const (
+	Easy TourDifficulty = iota
+	Medium
+	Hard
+)
+
+type Tour struct {
+	ID          uint           `json:"id" gorm:"primaryKey"`
+	AuthorID    int64          `json:"author_id"`
+	Name        string         `json:"name"`
+	Description string         `json:"description"`
+	Difficulty  TourDifficulty `json:"difficulty"`
+	Tags        string         `json:"tags"`
+	Status      string         `json:"status"` // "DRAFT"
+	Price       float64        `json:"price"`  // 0
+	CreatedAt   time.Time      `json:"created_at"`
+	Checkpoints []Checkpoint   `json:"checkpoints" gorm:"foreignKey:TourID"`
+}
+
+type Checkpoint struct {
+	ID          uint    `json:"id" gorm:"primaryKey"`
+	TourID      uint    `json:"tour_id"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Latitude    float64 `json:"latitude"`
+	Longitude   float64 `json:"longitude"`
+	ImageURL    string  `json:"image_url"`
+}

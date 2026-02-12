@@ -26,6 +26,33 @@
       "DownstreamHostAndPorts": [
         { "Host": "blog-service", "Port": 8080 }
       ]
+    },
+    {
+      "UpstreamPathTemplate": "/tours",
+      "UpstreamHttpMethod": [ "POST", "GET", "OPTIONS" ],
+      "DownstreamPathTemplate": "/tours",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "tour-service", "Port": 8080 }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/tours/my",
+      "UpstreamHttpMethod": [ "GET", "OPTIONS" ],
+      "DownstreamPathTemplate": "/tours/my",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "tour-service", "Port": 8080 }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/tours/{id}/checkpoints",
+      "UpstreamHttpMethod": [ "POST", "OPTIONS" ],
+      "DownstreamPathTemplate": "/tours/{id}/checkpoints",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "tour-service", "Port": 8080 }
+      ]
     }
   ],
   "GlobalConfiguration": {
