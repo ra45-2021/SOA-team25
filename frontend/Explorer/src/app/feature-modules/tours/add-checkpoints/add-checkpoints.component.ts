@@ -16,6 +16,7 @@ export class AddCheckpointsComponent implements OnInit {
   durations: any[] = [];
   tourDistanceKm: number = 0;
   checkpointForm: FormGroup;
+  transportDurations: any[] = [];
   
   selectedFiles: File[] = [];
   previews: string[] = [];
@@ -60,58 +61,92 @@ export class AddCheckpointsComponent implements OnInit {
     this.previews.splice(index, 1);
   }
 
-  addCheckpoint(): void {
-    if (this.checkpointForm.invalid || this.selectedFiles.length === 0) {
-      alert("Popuni sva polja i izaberi sliku!");
-      return;
-    }
+  // add-checkpoints.component.ts
 
-    const formData = new FormData();
-    formData.append('name', this.checkpointForm.value.name);
-    formData.append('description', this.checkpointForm.value.description);
-    formData.append('latitude', this.checkpointForm.value.latitude.toString());
-    formData.append('longitude', this.checkpointForm.value.longitude.toString());
-    
-    formData.append('image', this.selectedFiles[0]);
-
-    this.service.addCheckpoint(this.tourId, formData).subscribe({
-      next: (res) => {
-        this.checkpoints = [...this.checkpoints, res];
-        this.checkpointForm.reset();
-        this.previews = [];
-        this.selectedFiles = [];
-        alert("Checkpoint sačuvan!");
-      },
-      error: (err) => {
-        console.error("Greška pri slanju:", err);
-        alert("Server i dalje odbija zahtev. Proveri Network tab za detalje.");
-      }
-    });
+addCheckpoint(): void {
+  if (this.checkpointForm.invalid || this.selectedFiles.length === 0) {
+    alert("Popuni sva polja i izaberi sliku!");
+    return;
   }
 
-  onTransportChange(type: TransportType): void {
-    this.minutes = Math.round(this.tourDistanceKm * (type === TransportType.Walk ? 12 : 3));
-  }
+  const formData = new FormData();
+  formData.append('name', this.checkpointForm.value.name);
+  formData.append('description', this.checkpointForm.value.description);
+  formData.append('latitude', this.checkpointForm.value.latitude.toString());
+  formData.append('longitude', this.checkpointForm.value.longitude.toString());
+  formData.append('image', this.selectedFiles[0]);
 
-  addDuration(): void {
-    this.durations.push({ transport: TransportType[this.selectedTransport], minutes: this.minutes });
-  }
+  this.service.addCheckpoint(this.tourId, formData).subscribe({
+    next: (res) => {
+      this.checkpoints = [...this.checkpoints, res];
+      
+      this.checkpointForm.reset({
+        name: '',
+        description: '',
+        latitude: 0,
+        longitude: 0
+      });
+      
+      this.previews = [];
+      this.selectedFiles = [];
+    },
+    error: (err) => console.error(err)
+  });
+}
+
+onRouteDistanceUpdated(dist: number): void {
+  this.tourDistanceKm = dist;
+  this.onTransportChange(this.selectedTransport);
+  
+  window.dispatchEvent(new Event('resize')); 
+}
 
   deleteCheckpoint(index: number): void {
     this.checkpoints.splice(index, 1);
     this.checkpoints = [...this.checkpoints];
   }
 
-  onRouteDistanceUpdated(dist: number): void {
-    this.tourDistanceKm = dist;
-    this.onTransportChange(this.selectedTransport);
-  }
-
-  finalizeTour(): void {
-    if (this.checkpoints.length < 2) {
-      alert("Tura mora imati bar 2 tačke!");
-      return;
-    }
-    this.router.navigate(['/tour-list']);
-  }
+  onTransportChange(type: TransportType): void {
+  this.selectedTransport = type;
+  this.minutes = Math.round(this.tourDistanceKm * (type === TransportType.Walk ? 12 : type === TransportType.Bike ? 4 : 1.5));
 }
+
+    addDuration(): void {
+      if (this.minutes <= 0) return;
+      
+      const existingIndex = this.transportDurations.findIndex(d => d.transportType === this.selectedTransport);
+      if (existingIndex > -1) {
+        this.transportDurations[existingIndex].minutes = this.minutes;
+      } else {
+        this.transportDurations.push({ 
+          minutes: this.minutes, 
+          transportType: this.selectedTransport 
+        });
+      }
+    }
+
+    getTransportIcon(type: number): string {
+      if (type === 0) return '🚶';
+      if (type === 1) return '🚲';
+      return '🚗';
+    }
+
+    finalizeTour(): void {
+  const publishData = {
+    distance: this.tourDistanceKm,
+    durations: this.transportDurations
+  };
+
+  this.service.publishTour(this.tourId, publishData).subscribe({
+    next: () => {
+      alert("Tura uspešno objavljena!");
+      this.router.navigate(['/tour-list']);
+    },
+    error: (err) => {
+      console.error("Full error object:", err);
+      const errorMessage = err?.error?.error || err?.message || "Unknown error occurred";
+      alert("Greška pri objavljivanju: " + errorMessage);
+    }
+  });
+}
+    }

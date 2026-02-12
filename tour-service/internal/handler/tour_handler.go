@@ -101,3 +101,51 @@ func (h *TourHandler) GetAllTours(c *gin.Context) {
     
     c.JSON(http.StatusOK, tours)
 }
+
+func (h *TourHandler) PublishTour(c *gin.Context) {
+    tourID, _ := strconv.ParseUint(c.Param("id"), 10, 32)
+
+    var requestData struct {
+        Distance  float64              `json:"distance"`
+        Durations []model.TourDuration `json:"durations"`
+    }
+
+    if err := c.ShouldBindJSON(&requestData); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "nevalidni podaci"})
+        return
+    }
+
+    err := h.svc.PublishTour(c.Request.Context(), uint(tourID), requestData.Distance, requestData.Durations)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"message": "Tura uspešno objavljena"})
+}
+
+func (h *TourHandler) ArchiveTour(c *gin.Context) {
+    idParam := c.Param("id")
+    tourID, _ := strconv.ParseUint(idParam, 10, 32)
+
+    err := h.svc.ArchiveTour(c.Request.Context(), uint(tourID))
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"message": "Tura uspešno arhivirana"})
+}
+
+func (h *TourHandler) ReactivateTour(c *gin.Context) {
+    idParam := c.Param("id")
+    tourID, _ := strconv.ParseUint(idParam, 10, 32)
+
+    err := h.svc.ReactivateTour(c.Request.Context(), uint(tourID))
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"message": "Tura uspešno reaktivirana"})
+}

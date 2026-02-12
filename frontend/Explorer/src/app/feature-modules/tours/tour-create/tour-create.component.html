@@ -37,7 +37,8 @@
         </div>
       </div>
 
-      <button mat-raised-button type="submit" class="btn-full danger">
+      <button mat-raised-button type="submit" class="btn-full danger" 
+        [disabled]="!tour.name || !tour.description || !tour.tags || tour.price <= 0">
         Next: Set Checkpoints
       </button>
     </form>

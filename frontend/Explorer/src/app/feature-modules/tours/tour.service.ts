@@ -27,4 +27,16 @@ export class TourService {
   addCheckpoint(tourId: number, checkpointData: FormData): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/${tourId}/checkpoints`, checkpointData);
   }
+
+  publishTour(tourId: number, publishData: { distance: number, durations: any[] }): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${tourId}/publish`, publishData);
+  }
+
+  archiveTour(tourId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${tourId}/archive`, {});
+  }
+
+  reactivateTour(tourId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${tourId}/reactivate`, {});
+  }
 }

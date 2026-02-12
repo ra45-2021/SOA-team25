@@ -65,15 +65,7 @@
   line-height: 1.1;
 }
 
-.meta-info {
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
-  margin: 20px 0;
-  color: #9ca3af;
-  font-size: 14px;
-  align-items: center;
-}
+
 
 .divider {
   border-color: rgba(255, 255, 255, 0.1) !important;
@@ -150,4 +142,154 @@
 
 .btn-primary-style:hover {
   background-color: #1d4ed8;
+}
+
+.guide-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-indicator {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+.status-indicator.published { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+.status-indicator.draft { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+.status-indicator.archived { background: rgba(156, 163, 175, 0.2); color: #9ca3af; }
+
+.btn-archive {
+  background: transparent;
+  border: 1px solid #f87171;
+  color: #f87171;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.2s;
+}
+
+.btn-archive:hover {
+  background: rgba(248, 113, 113, 0.1);
+}
+
+.btn-edit {
+  background: #4b6db6;
+  border: none;
+  color: white;
+  padding: 6px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-reactivate {
+  background: transparent;
+  border: 1px solid #10b981;
+  color: #10b981;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.2s;
+}
+
+.btn-reactivate:hover {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.tourist-preview {
+  margin-top: 15px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.first-checkpoint-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: #4ade80; 
+}
+
+.preview-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.preview-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+.checkpoint-name {
+  font-size: 14px;
+}
+
+.checkpoint-desc {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0 0 10px 0;
+  font-style: italic;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tourist-lock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f87171;
+  font-size: 12px;
+  font-weight: 600;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.meta-info {
+  display: flex;
+  justify-content: space-between; /* Razdvaja težinu (levo) od statistike (desno) */
+  align-items: center;
+  margin: 20px 0;
+}
+
+.stats-right {
+  display: flex;
+  align-items: center;
+  gap: 15px; 
+}
+
+.distance-info {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.price-tag-inline {
+  background: rgba(75, 109, 182, 0.2);
+  color: #4b6db6;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  border: 1px solid rgba(75, 109, 182, 0.3);
 }

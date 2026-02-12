@@ -57,6 +57,9 @@ func main() {
 		tours.POST("", tourHandler.CreateTour)
 		tours.GET("/my", tourHandler.GetMyTours)
 		tours.POST("/:id/checkpoints", tourHandler.AddCheckpoint)
+		tours.PUT("/:id/publish", tourHandler.PublishTour)
+		tours.PUT("/:id/archive", tourHandler.ArchiveTour)
+		tours.PUT("/:id/reactivate", tourHandler.ReactivateTour)
 	}
 
 	port := ":8080"

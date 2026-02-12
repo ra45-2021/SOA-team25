@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"time"
 	"tour-service/internal/client"
 	"tour-service/internal/model"
 	"tour-service/internal/store"
@@ -37,4 +38,59 @@ func (s *TourService) AddCheckpoint(cp *model.Checkpoint) error {
 
 func (s *TourService) GetAll() ([]model.Tour, error) {
     return s.store.GetAll()
+}
+
+func (s *TourService) PublishTour(ctx context.Context, tourID uint, distance float64, durations []model.TourDuration) error {
+    tour, err := s.store.GetByID(tourID)
+    if err != nil {
+        return err
+    }
+
+    if tour.Name == "" || tour.Description == "" || len(tour.Tags) == 0 {
+        return errors.New("Osnovni podaci (ime, opis, tagovi) nisu popunjeni!")
+    }
+
+    if len(tour.Checkpoints) < 2 {
+        return errors.New("Tura mora imati bar dve ključne tačke!")
+    }
+
+    if len(durations) == 0 {
+        return errors.New("Mora biti definisano bar jedno vreme prevoza!")
+    }
+
+    now := time.Now()
+    tour.Status = 1
+    tour.PublishedDateTime = &now
+    tour.Distance = distance
+    tour.Durations = durations
+
+    return s.store.Update(tour)
+}
+
+func (s *TourService) ArchiveTour(ctx context.Context, tourID uint) error {
+    tour, err := s.store.GetByID(tourID)
+    if err != nil {
+        return err
+    }
+
+    if tour.Status != 1 {
+        return errors.New("samo objavljene ture se mogu arhivirati")
+    }
+
+    tour.Status = 2 
+    return s.store.Update(tour)
+}
+
+func (s *TourService) ReactivateTour(ctx context.Context, tourID uint) error {
+    tour, err := s.store.GetByID(tourID)
+    if err != nil {
+        return err
+    }
+
+    if tour.Status != 2 {
+        return errors.New("samo arhivirane ture se mogu ponovo aktivirati")
+    }
+
+    tour.Status = 1 
+    return s.store.Update(tour)
 }

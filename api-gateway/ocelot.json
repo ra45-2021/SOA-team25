@@ -37,18 +37,9 @@
       ]
     },
     {
-      "UpstreamPathTemplate": "/tours/my",
-      "UpstreamHttpMethod": [ "GET", "OPTIONS" ],
-      "DownstreamPathTemplate": "/tours/my",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        { "Host": "tour-service", "Port": 8080 }
-      ]
-    },
-    {
-      "UpstreamPathTemplate": "/tours/{id}/checkpoints",
-      "UpstreamHttpMethod": [ "POST", "OPTIONS" ],
-      "DownstreamPathTemplate": "/tours/{id}/checkpoints",
+      "UpstreamPathTemplate": "/tours/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
+      "DownstreamPathTemplate": "/tours/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         { "Host": "tour-service", "Port": 8080 }

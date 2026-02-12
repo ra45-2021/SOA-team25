@@ -1,54 +1,90 @@
 <div class="page">
   <div class="list-header" *ngIf="userRole === 'GUIDE'">
-  <button class="btn-primary-style" routerLink="/create-tour">
-    + Create New Tour
-  </button>
-</div>
+    <button class="btn-primary-style" routerLink="/create-tour">
+      + Create New Tour
+    </button>
+  </div>
 
-  <div class="tour-grid" *ngIf="publishedTours.length > 0">
-    <mat-card class="details-card" *ngFor="let tour of publishedTours">
+  <div class="tour-grid">
+    <mat-card *ngFor="let tour of publishedTours" class="details-card">
       
       <div class="header-image-container">
-        <img
-          [src]="'https://res.cloudinary.com/colbycloud-next-cloudinary/image/upload/c_fill,w_3840,h_2880,g_auto/f_auto/q_auto/v1/images/mountain?_a=BAVMn6DW0'"
-          alt="Tour header"
-          class="header-img"
-        />
+        <img [src]="'https://res.cloudinary.com/colbycloud-next-cloudinary/image/upload/c_fill,w_3840,h_2880,g_auto/f_auto/q_auto/v1/images/mountain?_a=BAVMn6DW0'" 
+             class="header-img">
         <div class="header-overlay"></div>
       </div>
 
       <div class="content-padding">
-        <h1 class="blog-title">{{ tour.name }}</h1>
+        <h2 class="blog-title">{{ tour.name }}</h2>
         
         <div class="meta-info">
-          <div class="author-tag">
-            <span class="difficulty-tag" [ngClass]="'difficulty-' + tour.difficulty">
-              {{ tour.difficulty === 0 ? 'Easy' : tour.difficulty === 1 ? 'Medium' : 'Hard' }}
+          <span [ngClass]="'difficulty-' + tour.difficulty">
+            ● {{ tour.difficulty === 0 ? 'Easy' : tour.difficulty === 1 ? 'Medium' : 'Hard' }}
+          </span>
+          <div class="stats-right">
+            <span class="distance-info">{{ tour.distance | number:'1.1-2' }} km</span>
+            <span class="price-tag-inline">${{ tour.price }}</span>
+          </div>
+        </div>
+
+        <p class="markdown-body">{{ tour.description }}</p>
+
+        <div class="tags-container">
+          <span *ngFor="let tag of tour.tags.split(';')" class="tag-badge">#{{ tag }}</span>
+        </div>
+
+        <div class="tourist-preview" *ngIf="userRole !== 'GUIDE' && tour.checkpoints && tour.checkpoints.length > 0">
+          <div class="first-checkpoint-info">
+            <mat-icon class="preview-icon">location_on</mat-icon>
+            <span class="preview-label">Starting point:</span>
+            <strong class="checkpoint-name">{{ tour.checkpoints[0].name }}</strong>
+          </div>
+          <p class="checkpoint-desc">{{ tour.checkpoints[0].description }}</p>
+
+          <div class="tourist-lock" *ngIf="tour.checkpoints.length > 1">
+            <mat-icon>lock</mat-icon> 
+            <span>{{ tour.checkpoints.length - 1 }} more locations hidden. Purchase to unlock.</span>
+          </div>
+        </div>
+
+        <div class="guide-footer" *ngIf="userRole === 'GUIDE'">
+          <div class="status-box">
+            <span class="status-indicator" [ngClass]="{
+              'published': tour.status === 1,
+              'draft': tour.status === 0,
+              'archived': tour.status === 2
+            }">
+              {{ tour.status === 0 ? 'DRAFT' : tour.status === 1 ? 'PUBLISHED' : 'ARCHIVED' }}
             </span>
           </div>
-          <div class="price-container">
-            <mat-icon>monetization_on</mat-icon>
-            <span class="date-tag"><b>{{ tour.price }}</b></span>
+
+          <div class="action-buttons">
+            <button *ngIf="tour.status === 1" 
+                    class="btn-archive" 
+                    (click)="archiveTour(tour.id!)">
+              <mat-icon>archive</mat-icon> Archive
+            </button>
+
+            <button *ngIf="tour.status === 2" 
+                    class="btn-reactivate" 
+                    (click)="reactivateTour(tour.id!)">
+              <mat-icon>settings_backup_restore</mat-icon> Reactivate
+            </button>
+
+            <button *ngIf="tour.status === 0" 
+                    class="btn-edit" 
+                    [routerLink]="['/add-checkpoints', tour.id]">
+              <mat-icon>edit</mat-icon> Complete
+            </button>
           </div>
         </div>
 
-        <div class="tags-container" *ngIf="tour.tags">
-          <span class="tag-badge" *ngFor="let tag of tour.tags.split(';')">
-            #{{ tag.trim() }}
-          </span>
-        </div>
-
-        <mat-divider class="divider"></mat-divider>
-
-        <div class="markdown-body">
-          <p>{{ tour.description }}</p>
-        </div>
       </div>
     </mat-card>
   </div>
 
   <div class="page-state" *ngIf="publishedTours.length === 0">
-    <mat-icon style="font-size: 48px; width: 48px; height: 48px; color: #9ca3af;">map</mat-icon>
+    <mat-icon>map</mat-icon>
     <p>No adventures found yet...</p>
   </div>
 </div>
